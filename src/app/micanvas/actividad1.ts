@@ -33,6 +33,9 @@ export class Actividad1 implements EventsAdminListener, ButtonListener{
     private respuesta2:Button;
     private respuesta3:Button;
     private respuesta4:Button;
+    private btnSalir2:Button;
+    private arrayPreguntas: any[];
+    private arrayRespuestas: any[];
 
 
     constructor(vMotor:Motor){
@@ -41,6 +44,8 @@ export class Actividad1 implements EventsAdminListener, ButtonListener{
         this.imagenFondo.setImg('./assets/fondoCentro.jpg');
         this.motor.setRaiz(this.imagenFondo);
         this.crearEscenarioMenu();
+        this.arrayPreguntas=["¿Quien juega en Fanatic?","¿Quien es el mejor jugador de España de LOL?","¿Quien gano el año pasado los Worlds?"];
+        this.arrayRespuestas=[["Soaz","Raul","Luis","JOsue"],["Shotual","Pepinero","Madlife","Faker"],["Fanatic","Skt t1","Samsung","TSM"]];
         
     }
 
@@ -86,32 +91,40 @@ export class Actividad1 implements EventsAdminListener, ButtonListener{
     buttonListenerOnClick?(btn:Button):void{
         if(btn==this.btnNuevo){
          
-          this.window2 = new Window(this.motor, this.pmx, this.pmy,this.pmw,this.pmh);
+            this.window2 = new Window(this.motor, this.pmx, this.pmy,this.pmw,this.pmh);
             this.motor.addViewToParentView(this.imagenFondo,this.window2);
-            this.pregunta1=new Label(this.motor,380,70,100,50);
 
-            this.pregunta1.setTexto("pregunta 1");
-            this.motor.addViewToParentView(this.window2,this.btnNuevo);
+            this.pregunta1=new Label(this.motor,380,70,100,50);
+            this.pregunta1.setTexto(this.arrayPreguntas[0]);
+            this.motor.addViewToParentView(this.window2,this.pregunta1);
 
             this.respuesta1 = new Button(this.motor,120,220,200,100);
-            this.respuesta1.setTexto("respuesta1");
+            this.respuesta1.setTexto(this.arrayRespuestas[0][0]);
 
             this.respuesta2 = new Button(this.motor,520,220,200,100);
-            this.respuesta2.setTexto("respuesta2");
+            this.respuesta2.setTexto(this.arrayRespuestas[0][1]);
 
 
             this.respuesta3 = new Button(this.motor,120,330,200,100);
-            this.respuesta3.setTexto("respuesta3");
+            this.respuesta3.setTexto(this.arrayRespuestas[0][2]);
 
             this.respuesta4 = new Button(this.motor,520,320,200,100);
-            this.respuesta4.setTexto("respuesta4");
+            this.respuesta4.setTexto(this.arrayRespuestas[0][3]);
 
             this.motor.addViewToParentView(this.window2,this.respuesta1);
             this.motor.addViewToParentView(this.window2,this.respuesta2);
             this.motor.addViewToParentView(this.window2,this.respuesta3);
             this.motor.addViewToParentView(this.window2,this.respuesta4);
 
+            this.btnSalir2=new Button (this.motor,750,10,50,50);
+            this.btnSalir2.setTexto("Salir");
+            this.motor.addViewToParentView(this.window2,this.btnSalir2);
+            this.btnSalir2.setListener(this);
         }
+
+        if(btn==this.btnSalir2){
+            this.motor.setViewVisibility(this.window2.uid,false)
+          }
 
         if(btn==this.btnContinuar){
             
